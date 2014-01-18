@@ -1,3 +1,9 @@
+{% set navigation_bar = [
+('/', 'home', 'Home'),
+('/about/', 'about', 'About'),
+('/contact/', 'contact', 'Contact')
+] -%}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,9 +27,11 @@
 <div class="container">
     <div class="header">
         <ul class="nav nav-pills pull-right">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+            {% for href, id, caption in navigation_bar %}
+            <li {% if id==active_page %}class="active"{% endif %}>
+            <a href="{{ href|e }}">{{ caption|e }}</a>
+            </li>
+            {% endfor %}
         </ul>
         <h3 class="text-muted"><a href="/" style="text-decoration:none">Say My Name</a></h3>
     </div>
