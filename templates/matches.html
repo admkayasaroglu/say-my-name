@@ -1,52 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
 
-<!-- Bootstrap core CSS -->
-<link href="{{ url_for('static', filename='bootstrap3/css/bootstrap.css') }}" rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link href="{{ url_for('static', filename='css/jumbotron-narrow.css') }}" rel="stylesheet">
-
-</head>
-
-<body>
-
-<div class="container">
-    <div class="header">
-        <ul class="nav nav-pills pull-right">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted"><a href="/" style="text-decoration:none">Say My Name</a></h3>
+<div style="text-align:center; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;">
+    <h2>We've found {{name_list|length}} matches for you on SayMyName.name!</h2>
+    <div style="padding:15px 0 30px 0; font-size:24px;">
+        {% for p in name_list %}
+        <p>{{p}}</p>
+        {% else %}
+        <p>You are unique! But don't worry -- as we get more users, we'll surely find the perfect match for you.</p>
+        {% endfor %}
     </div>
+</div>
 
-    <div style="text-align:center; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;">
-        <h2>We've found {{name_list|length}} matches for you on SayMyName.name!</h2>
-        <div style="padding:15px 0 30px 0; font-size:24px;">
-            {% for p in name_list %}
-            <p>{{p}}</p>
-            {% else %}
-            <p>You are unique! But don't worry -- as we get more users, we'll surely find the perfect match for you.</p>
-            {% endfor %}
-        </div>
-    </div>
+<div class="jumbotron" style="padding:30px 0 15px 0">
+    <form action="/" method="post">
+        <p>What's your name? <input type="text" name="yourname"></p>
+        <p><button class="btn btn-success" type="submit" role="button">Find your match</a></p>
+    </form>
+</div>
 
+{% endblock %}
 
-    <div class="jumbotron" style="padding:30px 0 15px 0">
-        <form action="/" method="post">
-            <p>What's your name? <input type="text" name="yourname"></p>
-            <p><button class="btn btn-success" type="submit" role="button">Find your match</a></p>
-        </form>
-    </div>
-
-    <div class="footer">
-        <p>&copy; SayMyName, Inc. 2013</p>
-    </div>
-
-</div> <!-- /container -->
-
-
-<!-- Bootstrap core JavaScript
-    ================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-</body>
-</html>

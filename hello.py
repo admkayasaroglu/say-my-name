@@ -18,3 +18,14 @@ def matches(name):
     name_matcher = Matcher()
     name_list = name_matcher.match(name, 5) 
     return render_template('matches.html', name_list=name_list)
+
+@app.route('/about/')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact/')
+def contact():
+    return render_template('contact.html')
+
+
+

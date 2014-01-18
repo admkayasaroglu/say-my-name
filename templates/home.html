@@ -1,56 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+<div class="jumbotron">
+    <h1>Find your match</h1>
+    <p class="lead">Want to confuse your friends? Avoid the dilemma of choosing your children's last name? Reduce namespace collisions? If so, you need the Name Connection&trade;. Find the man or woman of your dreams with our patented match-up formula.</p>
 
-    <title>Say My Name Dating Service</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="{{ url_for('static', filename='bootstrap3/css/bootstrap.css') }}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-     <link href="{{ url_for('static', filename='css/jumbotron-narrow.css') }}" rel="stylesheet">
-   
-  </head>
-
-  <body>
-
-    <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted"><a href="/" style="text-decoration:none">Say My Name</a></h3>
-      </div>
-
-      <div class="jumbotron">
-        <h1>Find your match</h1>
-        <p class="lead">Want to confuse your friends? Avoid the dilemma of choosing your children's last name? Reduce namespace collisions? If so, you need the Name Connection&trade;. Find the man or woman of your dreams with our patented match-up formula.</p>
-
-        <form action="/" method="post">
-            <p>What's your name? <input type="text" name="yourname"></p>
-            <p><button class="btn btn-lg btn-success" type="submit" role="button">Find your match</a></p>
+    <form action="/" method="post">
+        <p>What's your name? <input type="text" name="yourname"></p>
+        <p><button class="btn btn-lg btn-success" type="submit" role="button">Find your match</a></p>
     </form>
-      </div>
+</div>
 
-      <div class="footer">
-        <p>&copy; SayMyName, Inc. 2013</p>
-      </div>
-
-    </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
-</html>
-
+{% endblock %} 
