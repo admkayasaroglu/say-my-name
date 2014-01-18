@@ -48,7 +48,6 @@ class Matcher:
                     options = name_dict[sound]
                     if gender:
                         options = [n for n in options if n["gender"]==gender]
-                    print options
                     matches.extend([n["name"] for n in options])
 
         return matches
@@ -62,7 +61,7 @@ class Matcher:
             matches.extend(chosen)
         return matches
 
-    def match_me(self, name, num_matches):
+    def match(self, name, num_matches):
         name_array = name.split()
         first = name_array[0]
         last = name_array[-1]
@@ -72,14 +71,14 @@ class Matcher:
             matches = self.get_match_array(n, num_matches, self.first_names, self.last_names)
             name_choices.append(matches)
         matches = self.get_match_array(last, num_matches, self.last_names, self.first_names)
+        if len(matches) < num_matches:
+            mult = num_matches / len(matches) + 1
+            matches = (matches * mult)[:num_matches] 
+        random.shuffle(matches)
         name_choices.append(matches)
 
-        #implement shuffle!!
-        for i in range(num_matches * 2):
-            print "\n"
-            for j in range(len(name_choices)):
-                print random.choice(name_choices[j]),
-        print "\n"
+        final_names = map(" ".join, zip(*name_choices))
+        return final_names
 
     def try_names(self):
         while True:
@@ -100,8 +99,6 @@ class Matcher:
                         options = self.last_names[sound]
                         print options
 
-name_matcher = Matcher()
-name_matcher.try_names()
 
 
 
