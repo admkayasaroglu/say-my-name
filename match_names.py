@@ -43,39 +43,59 @@ class Matcher:
         sounds = self.dtm(name)
         matches = []
         for sound in sounds:
-            if sound:
-                if sound in name_dict:
-                    options = name_dict[sound]
-                    if gender:
-                        options = [n for n in options if n["gender"]==gender]
-                    matches.extend([n["name"] for n in options])
+            if sound and sound in name_dict:
+                options = name_dict[sound]
+                if gender:
+                    options = [n for n in options if n["gender"]==gender]
+                matches.extend([n["name"] for n in options])
 
+        
+        matches = list(set(matches))
         return matches
 
     def get_match_array(self, name, num_matches, primary_dict, secondary_dict):
         matches = self.get_matches(name, primary_dict, None)
+
         if len(matches) < num_matches:
             extras = self.get_matches(name, secondary_dict, None)
-            num_to_add = min(num_matches - len(matches), len(extras))
-            chosen = random.sample(extras, num_to_add)
-            matches.extend(chosen)
+            random.shuffle(extras)
+            while len(matches) < num_matches and len(extras) > 0:
+                new_name = extras.pop()
+                if new_name not in matches:
+                    matches.append(new_name)
         return matches
 
-    def match(self, name, num_matches):
+    def match(self, name, min_matches):
         name_array = name.split()
-        first = name_array[0]
-        last = name_array[-1]
 
         name_choices = []
+        # First and middle names
         for n in name_array[:-1]: # first and middle names
-            matches = self.get_match_array(n, num_matches, self.first_names, self.last_names)
-            name_choices.append(matches)
-        matches = self.get_match_array(last, num_matches, self.last_names, self.first_names)
-        if len(matches) < num_matches:
-            mult = num_matches / len(matches) + 1
-            matches = (matches * mult)[:num_matches] 
-        random.shuffle(matches)
-        name_choices.append(matches)
+            matches = self.get_match_array(n, min_matches, self.first_names, self.last_names)
+            if len(matches) == 0: 
+                matches = [n.title()]
+            name_choices.append(matches[:])
+        # Last names
+        last = name_array[-1]
+        matches = self.get_match_array(last, min_matches, self.last_names, self.first_names)
+        if len(matches) == 0:
+            matches = [last.title()]
+        name_choices.append(matches[:])
+
+        #number of matches we will create
+        min_uniques = min(len(names) for names in name_choices)
+        max_uniques = max(len(names) for names in name_choices) 
+        if min_uniques < min_matches:
+           num_matches = min( min_uniques*3, max_uniques, min_matches)
+           for i in range(len(name_choices)):
+               matches = name_choices[i]
+               mult = int(num_matches / len(matches) + 1)
+               random.shuffle(matches)
+               matches = (matches * mult)[:num_matches] 
+               name_choices[i] = matches
+
+        for matches in name_choices:
+            random.shuffle(matches)
 
         final_names = map(" ".join, zip(*name_choices))
         return final_names

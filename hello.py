@@ -8,13 +8,10 @@ app.debug=True
 @app.route('/', methods=['POST', 'GET'])
 def hello():
     if request.method == 'POST':
-        app.logger.debug('pooooossstttt')
         name = request.form['yourname']
         return redirect(url_for('matches', name=name))
     else:
         return render_template('home.html')
-
-
 
 @app.route('/matches/<name>', methods=['GET'])
 def matches(name):
